@@ -14,5 +14,9 @@ Idea is to have one action per domain event.
 - Kill IResultBuilder and provide better design for it. It's too complex that way.
 - Find better way to make dev declare what is result of his handler.
 - Find better way to explain what went wrong during action.
+- Check how can we backport C# 8.0 features to .netStandar2.0
+	- https://stu.dev/csharp8-doing-unsupported-things/
+-
+
 
 ## Answered questions
