@@ -1,10 +1,19 @@
-﻿namespace TeArchitecture.Domain
-{    
-    public readonly struct PlayerId
+﻿using System;
+
+namespace TeArchitecture.Domain
+{
+    public readonly struct PlayerId : IEquatable<PlayerId>
     {
         public readonly long Id;
 
         public PlayerId(long id) => Id = id;
+
+        public override bool Equals(object obj) => obj is PlayerId other && Equals(other);
+        public bool Equals(PlayerId other) => Id == other.Id;
+        public override int GetHashCode() => Id.GetHashCode();
+
+        public static bool operator == (PlayerId p1, PlayerId p2) => p1.Equals(p2);
+        public static bool operator != (PlayerId p1, PlayerId p2) => !p1.Equals(p2);
     }
 
     public readonly struct Moral

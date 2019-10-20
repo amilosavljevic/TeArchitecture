@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace TeArchitecture.Domain
 {
@@ -17,6 +17,7 @@ namespace TeArchitecture.Domain
     public class Squad : ISquad
     {
         public List<PlayerData> PlayersOnPitch { get; set; }
+
         public List<PlayerData> AllPlayers { get; set; }
         
         public string Formation { get; set; }
@@ -25,8 +26,8 @@ namespace TeArchitecture.Domain
 
         IReadOnlyList<PlayerData> ISquad.AllPlayers => AllPlayers;
 
-        public PlayerData GetPlayer(PlayerId id) => throw new System.NotImplementedException();
+        public PlayerData GetPlayer(PlayerId id) => AllPlayers.Find(p => p.Id == id);
 
-        public void RemovePlayer(PlayerId playerId) => throw new NotImplementedException();
+        public bool IsOnPitch(PlayerId playerId) => PlayersOnPitch.Any(p => p.Id == playerId);
     }
 }
