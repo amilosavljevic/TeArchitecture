@@ -1,6 +1,5 @@
 ﻿using TeArchitecture.Domain;
 using TeArchitecture.Shared;
-using TeArchitecture.Shared.Bus;
 
 namespace TeArchitecture.Demo1
 {
@@ -77,21 +76,21 @@ namespace TeArchitecture.Demo1
 
                     if (player1IsOnPitch && player2IsOnPitch)
                     {
-                        var player1Index = squad.PlayersOnPitch.FindIndex(p=>p.Id == action.Player1);
-                        var player2Index = squad.PlayersOnPitch.FindIndex(p => p.Id == action.Player2);
+                        var player1Index = squad.PlayersOnPitch.IndexOf(action.Player1);
+                        var player2Index = squad.PlayersOnPitch.IndexOf(action.Player2);
 
                         // Do the switcheroo
                         squad.PlayersOnPitch.Swap(player1Index, player2Index);
                     }
                     else if (player1IsOnPitch)
                     {
-                        var indexOnPitch = squad.PlayersOnPitch.FindIndex(p => p.Id == action.Player1);
-                        squad.PlayersOnPitch[indexOnPitch] = squad.GetPlayer(action.Player2);
+                        var indexOnPitch = squad.PlayersOnPitch.IndexOf(action.Player1);
+                        squad.PlayersOnPitch[indexOnPitch] = action.Player2;
                     }
                     else // player2 is on pitch
                     {
-                        var indexOnPitch = squad.PlayersOnPitch.FindIndex(p => p.Id == action.Player2);
-                        squad.PlayersOnPitch[indexOnPitch] = squad.GetPlayer(action.Player1);
+                        var indexOnPitch = squad.PlayersOnPitch.IndexOf(action.Player2);
+                        squad.PlayersOnPitch[indexOnPitch] = action.Player1;
                     }
 
                     bus.Send(new SquadUpdatedEvent(squad));

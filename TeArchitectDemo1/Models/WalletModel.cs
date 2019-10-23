@@ -1,5 +1,5 @@
 ﻿using TeArchitecture.Domain;
-using TeArchitecture.Shared.MVC;
+using TeArchitecture.Shared;
 
 namespace TeArchitecture.Demo1
 {

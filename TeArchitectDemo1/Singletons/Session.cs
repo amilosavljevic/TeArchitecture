@@ -1,5 +1,5 @@
 ﻿using System;
-using TeArchitecture.Shared.Bus;
+using TeArchitecture.Shared;
 
 namespace TeArchitecture.Demo1
 {

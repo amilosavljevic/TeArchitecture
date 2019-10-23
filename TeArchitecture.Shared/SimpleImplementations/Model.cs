@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TeArchitecture.Shared.MVC
+namespace TeArchitecture.Shared
 {
     public class Model<TModel, TData>
         where TModel : Model<TModel, TData>, new()

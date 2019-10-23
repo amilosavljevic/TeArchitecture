@@ -16,18 +16,28 @@ namespace TeArchitecture.Domain
 
     public class Squad : ISquad
     {
-        public List<PlayerData> PlayersOnPitch { get; set; }
+        public List<PlayerId> PlayersOnPitch { get; set; }
 
         public List<PlayerData> AllPlayers { get; set; }
         
         public string Formation { get; set; }
+        
+        private readonly List<PlayerData> cachedPlayersOnPitch = new List<PlayerData>();
 
-        IReadOnlyList<PlayerData> ISquad.PlayersOnPitch => PlayersOnPitch;
+        IReadOnlyList<PlayerData> ISquad.PlayersOnPitch
+        {
+            get
+            {
+                cachedPlayersOnPitch.Clear();
+                cachedPlayersOnPitch.AddRange(PlayersOnPitch.Select(GetPlayer));
+                return cachedPlayersOnPitch;
+            }
+        }
 
         IReadOnlyList<PlayerData> ISquad.AllPlayers => AllPlayers;
 
         public PlayerData GetPlayer(PlayerId id) => AllPlayers.Find(p => p.Id == id);
 
-        public bool IsOnPitch(PlayerId playerId) => PlayersOnPitch.Any(p => p.Id == playerId);
+        public bool IsOnPitch(PlayerId playerId) => PlayersOnPitch.Contains(playerId);
     }
 }

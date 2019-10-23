@@ -2,11 +2,13 @@
 
 namespace TeArchitecture.Shared
 {
-    // This maybe should inherit from IAsyncResult, so we can do all kind of async shenanigans.
+    /// <summary>
+    /// Abstraction for asynchronous task.
+    /// </summary>
     public interface ITask
     {
-        void Fail(string errorMessage);
-
+        event Action<ITask> Done;
+        
         void Fail(IError error);
 
         void Finish();
@@ -14,10 +16,9 @@ namespace TeArchitecture.Shared
         IError Error { get; }
     }
 
-    // This maybe should inherit from IAsyncResult<T>, so we can do all kind of async shenanigans.
     public interface ITask<T>
     {
-        void Fail(string errorMessage);
+        event Action<ITask<T>> Done;        
 
         void Fail(IError error);
         void Finish(T result);
@@ -28,6 +29,16 @@ namespace TeArchitecture.Shared
 
     public static partial class ITaskExtensions
     {
+        public static void Fail(this ITask task, string errorMessage)
+        {
+            task.Fail(new Error(errorMessage));
+        }
+
+        public static void Fail<T>(this ITask<T> task, string errorMessage)
+        {
+            task.Fail(new Error(errorMessage));
+        }
+
         public static ITask OnSuccess(this ITask result, Action onSuccess)
         {
             throw new NotImplementedException();

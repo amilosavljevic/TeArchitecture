@@ -1,4 +1,4 @@
-﻿namespace TeArchitecture.Shared.MVC
+﻿namespace TeArchitecture.Shared
 {
     public interface IView { }   
 
