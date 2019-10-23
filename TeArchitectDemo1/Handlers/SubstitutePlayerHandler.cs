@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using TeArchitecture.Domain;
+﻿using TeArchitecture.Domain;
 using TeArchitecture.Shared;
 using TeArchitecture.Shared.Bus;
 
@@ -26,9 +25,17 @@ namespace TeArchitecture.Demo1
         public static readonly IError FailToSubstituePlayersOnServer = new Error("Failed to substitute players.");
         public static readonly IError FailToConnectToServer = new Error("Failed to connect to server.");
 
-        // TODO: inject
-        private Squad squad;
+        // TODO: inject somehow => for now, constructor.
         private IBus bus;
+        private Squad squad;
+        private IChannel communicationChannel;
+
+        public SubstitutePlayerHandler(IBus bus, Squad squad, IChannel communicationChannel)
+        {
+            this.squad = squad;
+            this.bus = bus;
+            this.communicationChannel = communicationChannel;
+        }
 
         public void Process(SubstitutePlayersAction action, ITask task)
         {
@@ -42,7 +49,7 @@ namespace TeArchitecture.Demo1
             {
                 task.Fail(CannotSwapWithSamePlayer);
                 return;
-            }          
+            }
 
             var player1IsOnPitch = squad.IsOnPitch(action.Player1);
             var player2IsOnPitch = squad.IsOnPitch(action.Player2);
@@ -53,8 +60,14 @@ namespace TeArchitecture.Demo1
                 return;
             }
 
-            bus.Send<SubstitutePlayerRequest, SubstitutePlayerResponse>(new SubstitutePlayerRequest(), this)
-               .OnSuccess ( res =>
+            var request = new SubstitutePlayerRequest()
+            {
+                Player1 = action.Player1,
+                Player2 = action.Player2,
+            };
+
+            communicationChannel.Send<SubstitutePlayerRequest, SubstitutePlayerResponse> (request, this)
+               .OnSuccess ( (SubstitutePlayerResponse res) =>
                 {
                     if (!res.IsSuccess)
                     {
@@ -81,8 +94,8 @@ namespace TeArchitecture.Demo1
                         squad.PlayersOnPitch[indexOnPitch] = squad.GetPlayer(action.Player1);
                     }
 
+                    bus.Send(new SquadUpdatedEvent(squad));
                     task.Finish();
-                    bus.Send (new SquadUpdatedEvent(squad));
                 })
                .OnFail(innerTask => task.Fail(FailToConnectToServer));
         }
@@ -100,6 +113,7 @@ namespace TeArchitecture.Demo1
     public class SubstitutePlayerRequest
     {
         public PlayerId Player1;
+        public PlayerId Player2;
     }
 
     public class SubstitutePlayerResponse

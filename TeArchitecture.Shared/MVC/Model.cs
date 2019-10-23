@@ -2,20 +2,36 @@
 
 namespace TeArchitecture.Shared.MVC
 {
-    public class Model<T> : IDisposable
-    {
-        public T Data { get; set; }
-        protected IBus Bus { get; private set; }
+    public class Model<TModel, TData>
+        where TModel : Model<TModel, TData>, new()
+    { 
+        private TData data;
 
-        public Model(T data, IBus bus)
+        protected virtual void OnInit() {}
+
+        protected virtual void OnDispose() {}
+
+        #region Singleton n stuff
+
+        private static readonly Lazy<TModel> instance = new Lazy<TModel>(() => new TModel());
+
+        public static TData Data
         {
-            Data = data;
-            Bus = bus;
-
-            OnInit();
+            get { return instance.Value.data; }
+            private set { instance.Value.data = value; }
         }
 
-        protected virtual void OnInit () {}
-        public virtual void Dispose () {}
+        public static void Init(TData data)
+        {
+            instance.Value.data = data;
+            instance.Value.OnInit();
+        }
+
+        public static void Clear()
+        {
+            instance.Value.OnDispose();
+        }
+
+    #endregion
     }
 }

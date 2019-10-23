@@ -7,6 +7,6 @@
 
     public interface IHandler<TMessage, TResponse>
     {
-        ITask<TResponse> Process(TMessage message, ITask<TResponse> result);
+        void Process(TMessage message, ITask<TResponse> result);
     }
 }

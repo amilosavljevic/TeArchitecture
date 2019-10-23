@@ -1,5 +1,6 @@
 ﻿using TeArchitecture.Domain;
 using TeArchitecture.Shared;
+using TeArchitecture.Shared.Bus;
 using TeArchitecture.Shared.MVC;
 
 namespace TeArchitecture.Demo1

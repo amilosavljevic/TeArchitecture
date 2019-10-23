@@ -4,16 +4,18 @@ namespace TeArchitecture.Domain
 {
     public readonly struct PlayerId : IEquatable<PlayerId>
     {
-        public readonly long Id;
+        private readonly long id;
 
-        public PlayerId(long id) => Id = id;
+        public PlayerId(long id) => this.id = id;
 
         public override bool Equals(object obj) => obj is PlayerId other && Equals(other);
-        public bool Equals(PlayerId other) => Id == other.Id;
-        public override int GetHashCode() => Id.GetHashCode();
+        public bool Equals(PlayerId other) => id == other.id;
+        public override int GetHashCode() => id.GetHashCode();
 
         public static bool operator == (PlayerId p1, PlayerId p2) => p1.Equals(p2);
         public static bool operator != (PlayerId p1, PlayerId p2) => !p1.Equals(p2);
+
+        public static implicit operator long(PlayerId pId) => pId.id;
     }
 
     public readonly struct Moral

@@ -11,11 +11,19 @@ namespace TeArchitecture.Demo1
     }
 
     public class SellPlayerNowHandler : IHandler<SellPlayerNowAction>
-    {
-        // TODO: inject
-        private Squad squad;
-        private Wallet wallet;
-        private IBus bus;
+    {        
+        private readonly Squad squad;
+        private readonly Wallet wallet;
+        private readonly IBus bus;
+        private readonly IChannel communicationChannel;
+
+        public SellPlayerNowHandler(IBus bus, Squad squad, Wallet wallet, IChannel channel)
+        {
+            this.bus = bus;
+            this.squad = squad;
+            this.wallet = wallet;
+            this.communicationChannel = channel;
+        }
 
         public void Process(SellPlayerNowAction sellAction, ITask task)
         {
@@ -42,10 +50,10 @@ namespace TeArchitecture.Demo1
             // this will simulate sending proto to server.
             var req = new SellPlayerRequest
             {
-                PlayerId = sellAction.PlayerId.Id
+                PlayerId = sellAction.PlayerId
             };
 
-            bus.Send<SellPlayerRequest, SellPlayerResponse>(req)
+            communicationChannel.Send<SellPlayerRequest, SellPlayerResponse>(req)
                 .OnSuccess(
                     r => {
                         if (!r.IsSuccess)
@@ -59,7 +67,7 @@ namespace TeArchitecture.Demo1
                         wallet.Money += r.SellPrice;
                         task.Finish();
                     }
-                ).OnFail(innerTask => task.Fail("Server did not respond."));
+                ).OnFail( _ => task.Fail("Server did not respond."));
         }        
     }
 

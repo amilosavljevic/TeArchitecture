@@ -1,22 +1,30 @@
-﻿using TeArchitecture.Shared.Bus;
+﻿using System;
 
-namespace TeArchitecture.Shared
+namespace TeArchitecture.Shared.Bus
 {
     public interface IBus
     {
-        ITask Send<TMessage>(TMessage message, object sender = null);       
+        ITask Send<TMessage>(TMessage message, object sender = null);
 
-        void Subscribe<TMessage>(IHandler<TMessage> handler);
+        // Callbacks
+        void Subscribe<TMessage>(Action<TMessage> handler);
 
-        void Unsubscribe<TMessage>(IHandler<TMessage> handler);
+        void Unsubscribe<TMessage>(Action<TMessage> handler);
 
+        // Handlers. This should not be here, I think
+        void Subscribe<TMessage>(Func<IHandler<TMessage>> handlerFactory);
 
-        // Aditionally we could have message that needs to return response/result.
+        void Unsubscribe<TMessage>(Func<IHandler<TMessage>> handlerFactory);
+    }
 
+    public static class IBusExtensions
+    {
+        // This reads better I think, I want to try it.
+        public static void On<TMessage>(this IBus bus, Func<IHandler<TMessage>> handlerFactory) => bus.Subscribe<TMessage>(handlerFactory);
+    }
+
+    public interface IChannel
+    {
         ITask<TResponse> Send<TMessage, TResponse>(TMessage message, object sender = null);
-
-        void Subscribe<TMessage, TResponse>(IHandler<TMessage, TResponse> handler);
-
-        void Unsubscribe<TMessage, TResponse>(IHandler<TMessage, TResponse> handler);
-    }  
+    }
 }
