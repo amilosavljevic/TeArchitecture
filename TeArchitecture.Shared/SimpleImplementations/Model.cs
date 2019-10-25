@@ -4,7 +4,7 @@ namespace TeArchitecture.Shared
 {
     public class Model<TModel, TData>
         where TModel : Model<TModel, TData>, new()
-    { 
+    {
         private TData data;
 
         protected virtual void OnInit() {}
@@ -15,13 +15,9 @@ namespace TeArchitecture.Shared
 
         private static readonly Lazy<TModel> instance = new Lazy<TModel>(() => new TModel());
 
-        public static TData Data
-        {
-            get { return instance.Value.data; }
-            private set { instance.Value.data = value; }
-        }
+        public static TData Data => instance.Value.data;
 
-        public static void Init(TData data)
+		public static void Init(TData data)
         {
             instance.Value.data = data;
             instance.Value.OnInit();
