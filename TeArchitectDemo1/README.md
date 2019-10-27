@@ -4,7 +4,8 @@
 	- IBus for message passing (instead of events).
 	- ITask to hide async commands.
 	- Split models into testable IHandlers.
-	- Models are data holders only. Protected mutable reference to data, public immutable. Also models can access other models data.
+	- Models are data holders only. Protected mutable reference to data, public immutable.
+	- Also models can access other models data.
 
 ## Questions
 - Should ITask inherit from Task(or whatever) so we can use it with await.
