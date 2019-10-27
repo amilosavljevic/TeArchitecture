@@ -7,10 +7,11 @@ namespace TeArchitecture.Demo1.Tests
 {
     public class SubstitutePlayerHandlerTests
     {
+        private const int TotalPlayersCount = 22;
+        private const int PlayersOnPitchCount = 11;
+
         [SetUp]
-        public void Setup()
-        {
-        }
+        public void Setup() {}
 
         [Test]
         public void TestHappyPath()
@@ -18,16 +19,26 @@ namespace TeArchitecture.Demo1.Tests
             var squad = GenerateSquad();
             var bus = new BusMock();
             var channel = new ChannelMock();
+            var action = new SubstitutePlayersAction (new PlayerId(0), new PlayerId(1));
+
+
+            // Check before
+            CheckSquad(squad);
+            Assert.AreEqual(0, (long) squad.PlayersOnPitch[0]);
+            Assert.AreEqual(1, (long) squad.PlayersOnPitch[0]);
 
             var handler = new SubstitutePlayerHandler(bus, squad, channel);
-            //handler.Process();
+            handler.Process(action);
+
+            // Check after
+            CheckSquad(squad);
         }
 
         private Squad GenerateSquad()
         {
             return new Squad()
             {
-                AllPlayers = Enumerable.Range(1, 20)
+                AllPlayers = Enumerable.Range(1, TotalPlayersCount)
                             .Select(id => new PlayerData()
                             {
                                 Id = new PlayerId(id),
@@ -36,10 +47,19 @@ namespace TeArchitecture.Demo1.Tests
                                 Condition = new Condition(100),
                                 Moral = new Moral(10),                                
                             }).ToList(),
-                PlayersOnPitch = Enumerable.Range(1, 11)
+                PlayersOnPitch = Enumerable.Range(1, PlayersOnPitchCount)
                                 .Select(id=> new PlayerId(id))
                                 .ToList(),
             };
+        }
+
+        private void CheckSquad(Squad squad)
+        {
+            Assert.IsNotNull(squad.AllPlayers);
+            Assert.AreEqual(TotalPlayersCount, squad.AllPlayers.Count);
+
+            Assert.IsNotNull(squad.PlayersOnPitch);
+            Assert.AreEqual(PlayersOnPitchCount, squad.PlayersOnPitch.Count);
         }
     }
 }

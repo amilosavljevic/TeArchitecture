@@ -35,7 +35,7 @@ namespace TeArchitecture.Demo1
         private void OnSellButtonClicked()
         {
             var clickedPlayer = GetClickedPlayerId();
-            bus.Send(new SellPlayerNowAction(clickedPlayer), this);                
+            bus.Send(new SellPlayerNowAction(clickedPlayer), this);            
         }
 
         private void OnPlayerDroppedOntoPitch()
@@ -44,10 +44,7 @@ namespace TeArchitecture.Demo1
             var player2 = GetClickedPlayerId();
 
             bus.Send(new SubstitutePlayersAction(player1, player2), this)
-                .OnFail( task =>
-                {
-                    Toaster.Show("SubstitutePlayerHandler_CannotSwapWithSamePlayer");
-                });
+                .OnFail(task => Toaster.Show("SubstitutePlayerHandler_CannotSwapWithSamePlayer"));
         }
 
         #endregion

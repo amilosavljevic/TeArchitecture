@@ -10,7 +10,8 @@ namespace TeArchitecture.Demo1
     }
 
     public class SellPlayerNowHandler : Handler<SellPlayerNowAction>
-    {        
+    {
+        // TODO: inject somehow => for now, constructor.
         private readonly Squad squad;
         private readonly Wallet wallet;
         private readonly IBus bus;
@@ -65,11 +66,13 @@ namespace TeArchitecture.Demo1
                     }
                 ).OnFail( _ => Fail("Server did not respond."));
 
+            // TODO: maybe we can merge this instruction with previous one?
             return FinishAsync();
         }
     }
 
-    // This is proto. It would be better if servers are in C#, we would not need to re-pack request in proto :O
+    #region Proto imitation
+   
     public class SellPlayerRequest
     {
         public long PlayerId;
@@ -80,4 +83,6 @@ namespace TeArchitecture.Demo1
         public bool IsSuccess { get; set; }
         public int SellPrice { get; set; }
     }
+
+    #endregion
 }
