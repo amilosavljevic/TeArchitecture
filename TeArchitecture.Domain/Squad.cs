@@ -7,24 +7,24 @@ namespace TeArchitecture.Domain
     {
         // Should not be string.
         string Formation { get; }
-        IReadOnlyList<PlayerData> PlayersOnPitch { get; }
-        IReadOnlyList<PlayerData> AllPlayers { get; }
+        IReadOnlyList<Player> PlayersOnPitch { get; }
+        IReadOnlyList<Player> AllPlayers { get; }
 
         // TODO: Nullable reference types would be great here!
-        PlayerData GetPlayer(PlayerId id);
+        Player GetPlayer(PlayerId id);
     }
 
     public class Squad : ISquad
     {
         public List<PlayerId> PlayersOnPitch { get; set; }
 
-        public List<PlayerData> AllPlayers { get; set; }
+        public List<Player> AllPlayers { get; set; }
         
         public string Formation { get; set; }
         
-        private readonly List<PlayerData> cachedPlayersOnPitch = new List<PlayerData>();
+        private readonly List<Player> cachedPlayersOnPitch = new List<Player>();
 
-        IReadOnlyList<PlayerData> ISquad.PlayersOnPitch
+        IReadOnlyList<Player> ISquad.PlayersOnPitch
         {
             get
             {
@@ -34,9 +34,9 @@ namespace TeArchitecture.Domain
             }
         }
 
-        IReadOnlyList<PlayerData> ISquad.AllPlayers => AllPlayers;
+        IReadOnlyList<Player> ISquad.AllPlayers => AllPlayers;
 
-        public PlayerData GetPlayer(PlayerId id) => AllPlayers.Find(p => p.Id == id);
+        public Player GetPlayer(PlayerId id) => AllPlayers.Find(p => p.Id == id);
 
         public bool IsOnPitch(PlayerId playerId) => PlayersOnPitch.Contains(playerId);
     }

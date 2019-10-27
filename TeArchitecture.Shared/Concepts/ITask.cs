@@ -3,7 +3,7 @@
 namespace TeArchitecture.Shared
 {
     /// <summary>
-    /// Abstraction for asynchronous task.
+    /// Abstraction for asynchronous task. Used to hide complexity of task that could be executed now or somewhere in future.
     /// </summary>
     public interface ITask
     {
@@ -18,6 +18,9 @@ namespace TeArchitecture.Shared
         IError Error { get; }
     }
 
+    /// <summary>
+    /// Abstraction for asynchronous task that should return result. Used to hide complexity of task that could be executed now or somewhere in future.
+    /// </summary>
     public interface ITask<T>
     {
         event Action<ITask<T>> Done;        

@@ -32,7 +32,7 @@ namespace TeArchitecture.Domain
         public Condition(int value) => Value = value;
     }
 
-    public interface IPlayerData
+    public interface IPlayer
     {
         PlayerId Id { get; }
         string Name { get; }
@@ -41,7 +41,7 @@ namespace TeArchitecture.Domain
         Condition Condition { get; }
     }
 
-    public class PlayerData : IPlayerData
+    public class Player : IPlayer
     {
         public PlayerId Id { get; set; }
         public string Name { get; set; }

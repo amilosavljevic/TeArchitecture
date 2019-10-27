@@ -2,14 +2,14 @@
 
 namespace TeArchitecture.Demo1
 {
-    public class SquadMode : Model<SquadMode, Squad>
+    public class SquadModel : Model<SquadModel, Squad>
     {
         protected override void OnInit()
         {
             base.OnInit();
 
-            On<SellPlayerNowAction>(() => new SellPlayerNowHandler(GlobalBus.Instance, SquadMode.Data, WalletModel.Data, Session.Instance));
-            On<SubstitutePlayersAction>(() => new SubstitutePlayerHandler(GlobalBus.Instance, SquadMode.Data, Session.Instance));
+            On<SellPlayerNowAction>(() => new SellPlayerNowHandler(GlobalBus.Instance, Data, WalletModel.Data, Session.Instance));
+            On<SubstitutePlayersAction>(() => new SubstitutePlayerHandler(GlobalBus.Instance, Data, Session.Instance));
         }
     }
 }

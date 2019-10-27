@@ -201,7 +201,7 @@ namespace TeArchitecture.Demo1.Tests
             return new Squad()
             {
                 AllPlayers = Enumerable.Range(0, AllPlayersCount)
-                            .Select(id => new PlayerData()
+                            .Select(id => new Player()
                             {
                                 Id = new PlayerId(id),
                                 Name = "Player " + id,

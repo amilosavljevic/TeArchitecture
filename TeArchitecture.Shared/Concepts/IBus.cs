@@ -11,7 +11,6 @@ namespace TeArchitecture.Shared
     {
         ITask Send<TMessage>(TMessage message, object sender = null);
 
-        // Callbacks
         void Subscribe<TMessage>(Action<TMessage> handler);
 
         void Unsubscribe<TMessage>(Action<TMessage> handler);       

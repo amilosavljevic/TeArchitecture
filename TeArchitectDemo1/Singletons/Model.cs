@@ -16,7 +16,7 @@ namespace TeArchitecture.Demo1
 
         private static readonly Lazy<TModel> instance = new Lazy<TModel>(() => new TModel());
 
-        public static TData Data => instance.Value.data;
+        protected static TData Data => instance.Value.data;
 
 		public static void Init(TData data)
         {
