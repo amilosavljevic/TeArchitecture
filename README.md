@@ -12,7 +12,7 @@ Used to keep track of all design decision we made, so we can document it for whe
 
 ### Global TODO.md
 
-Just dump all Solution-wise TODOs here, so what to do next.
+Just dump all Solution-wise TODOs here, so we know what to do next.
 
 ### TeArchitecture.Shared
 
