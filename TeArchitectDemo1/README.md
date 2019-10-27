@@ -12,9 +12,10 @@ Idea is to have one action per domain event.
 - Should IBus know about async-sync? Looks like implementation leaked into design.
 
 ## TODOs
-- Check how can we backport C# 8.0 features to .netStandar2.0
+- Check how can we back-port C# 8.0 features to .netStandar2.0
 	- https://stu.dev/csharp8-doing-unsupported-things/
 - Do Unit tests
 - Implement simple Bus in order for tests to work
+- ITask and ITask<T> Should have, same base interface (or one should inherit from another)
 
 ## Answered questions

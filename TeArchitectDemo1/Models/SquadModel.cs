@@ -1,5 +1,4 @@
 ﻿using TeArchitecture.Domain;
-using TeArchitecture.Shared;
 
 namespace TeArchitecture.Demo1
 {
@@ -9,10 +8,8 @@ namespace TeArchitecture.Demo1
         {
             base.OnInit();
 
-            var bus = GlobalBus.Instance;
-
-            bus.On<SellPlayerNowAction>(() => new SellPlayerNowHandler(GlobalBus.Instance, SquadMode.Data, WalletModel.Data, Session.Instance));
-            bus.On<SubstitutePlayersAction>(() => new SubstitutePlayerHandler(GlobalBus.Instance, SquadMode.Data, Session.Instance));
+            On<SellPlayerNowAction>(() => new SellPlayerNowHandler(GlobalBus.Instance, SquadMode.Data, WalletModel.Data, Session.Instance));
+            On<SubstitutePlayersAction>(() => new SubstitutePlayerHandler(GlobalBus.Instance, SquadMode.Data, Session.Instance));
         }
     }
 }

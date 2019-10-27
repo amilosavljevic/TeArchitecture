@@ -15,7 +15,7 @@ namespace TeArchitecture.Demo1
         }
     }
 
-    public class SubstitutePlayerHandler : IHandler<SubstitutePlayersAction>
+    public class SubstitutePlayerHandler : Handler<SubstitutePlayersAction>
     {
         // Let's do a example where you define in advance what errors could happen.
         public static readonly IError PlayerNotPartOfSquad = new Error("Player not part of this squad!");
@@ -36,18 +36,16 @@ namespace TeArchitecture.Demo1
             this.communicationChannel = communicationChannel;
         }
 
-        public void Process(SubstitutePlayersAction action, ITask task)
+        public override ITask Process(SubstitutePlayersAction action)
         {
             if (squad.GetPlayer(action.Player1) == null || squad.GetPlayer(action.Player2) == null)
             {
-                task.Fail(PlayerNotPartOfSquad);
-                return;
+                return Fail(PlayerNotPartOfSquad);
             }
 
             if (action.Player1 == action.Player2)
             {
-                task.Fail(CannotSwapWithSamePlayer);
-                return;
+                return Fail(CannotSwapWithSamePlayer);                
             }
 
             var player1IsOnPitch = squad.IsOnPitch(action.Player1);
@@ -55,8 +53,7 @@ namespace TeArchitecture.Demo1
 
             if (!player1IsOnPitch && player2IsOnPitch)
             {
-                task.Fail(PlayersNotOnPitch);
-                return;
+                return Fail(PlayersNotOnPitch);                
             }
 
             var request = new SubstitutePlayerRequest()
@@ -70,7 +67,7 @@ namespace TeArchitecture.Demo1
                 {
                     if (!res.IsSuccess)
                     {
-                        task.Fail(FailToSubstituePlayersOnServer);
+                        Fail(FailToSubstituePlayersOnServer);
                         return;
                     }                    
 
@@ -94,9 +91,11 @@ namespace TeArchitecture.Demo1
                     }
 
                     bus.Send(new SquadUpdatedEvent(squad));
-                    task.Finish();
+                    Finish();
                 })
-               .OnFail(innerTask => task.Fail(FailToConnectToServer));
+               .OnFail(innerTask => Fail(FailToConnectToServer));
+
+            return FinishAsync();
         }
     }
 

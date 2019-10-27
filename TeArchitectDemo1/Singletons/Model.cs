@@ -1,6 +1,7 @@
 ﻿using System;
+using TeArchitecture.Shared;
 
-namespace TeArchitecture.Shared
+namespace TeArchitecture.Demo1
 {
     public class Model<TModel, TData>
         where TModel : Model<TModel, TData>, new()
@@ -28,6 +29,21 @@ namespace TeArchitecture.Shared
             instance.Value.OnDispose();
         }
 
-    #endregion
+        #endregion
+
+        #region Handler registration        
+        
+        protected void On<TMessage>(Func<IHandler<TMessage>> handlerFactory)
+        {
+            // TODO: un-subscribe.
+            GlobalBus.Instance.Subscribe<TMessage>(
+               (message) =>
+               {
+                   var handler = handlerFactory();
+                   handler.Process(message);
+               });
+        }
+
+        #endregion
     }
 }

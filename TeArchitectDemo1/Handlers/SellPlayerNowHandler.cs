@@ -9,7 +9,7 @@ namespace TeArchitecture.Demo1
         public SellPlayerNowAction(PlayerId playerId) => PlayerId = playerId;
     }
 
-    public class SellPlayerNowHandler : IHandler<SellPlayerNowAction>
+    public class SellPlayerNowHandler : Handler<SellPlayerNowAction>
     {        
         private readonly Squad squad;
         private readonly Wallet wallet;
@@ -24,26 +24,23 @@ namespace TeArchitecture.Demo1
             this.communicationChannel = channel;
         }
 
-        public void Process(SellPlayerNowAction sellAction, ITask task)
+        public override ITask Process(SellPlayerNowAction sellAction)
         {
             var player = squad.GetPlayer(sellAction.PlayerId);
 
             if (player == null)
             {
-                task.Fail("Player not part Of the Squad.");
-                return;
+                return Fail("Player not part Of the Squad.");                
             }
 
             if (player.Age > 31)
             {
-                task.Fail("Player too old for this shit.");
-                return;
+                return Fail("Player too old for this shit.");                
             }
 
             if (squad.IsOnPitch(sellAction.PlayerId))
             {
-                task.Fail("Cannot sell player on pitch.");
-                return;
+                return Fail("Cannot sell player on pitch.");                
             }
 
             // this will simulate sending proto to server.
@@ -57,17 +54,19 @@ namespace TeArchitecture.Demo1
                     r => {
                         if (!r.IsSuccess)
                         {
-                            task.Fail("Server fail to sell players");
+                            Fail("Server fail to sell players");
                             return;
                         }
 
                         // Success -> update model and stuff...
                         squad.AllPlayers.RemoveAll(p=>p.Id == sellAction.PlayerId);
                         wallet.Money += r.SellPrice;
-                        task.Finish();
+                        Finish();
                     }
-                ).OnFail( _ => task.Fail("Server did not respond."));
-        }        
+                ).OnFail( _ => Fail("Server did not respond."));
+
+            return FinishAsync();
+        }
     }
 
     // This is proto. It would be better if servers are in C#, we would not need to re-pack request in proto :O
