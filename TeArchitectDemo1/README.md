@@ -17,6 +17,4 @@
 - Should IBus know about async-sync?
 
 ## TODOs
-- Check how can we back-port C# 8.0 features to .netStandar2.0
-	- https://stu.dev/csharp8-doing-unsupported-things/
 - ITask and ITask<T> Should have, same base interface (or one should inherit from another)

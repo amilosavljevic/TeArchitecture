@@ -4,11 +4,19 @@ Playing with new ideas for TE architecture.
 
 Doc: https://docs.google.com/document/d/1DmfnPwsOaGEyJ6JXelsjNWU8jjWk_K19VtPLea76shs/edit
 
-## Project Content
+## Project Files and Folders
+
+### Design Decisions Log.md
+
+Used to keep track of all design decision we made, so we can document it for when we forget why we made some decision.
+
+### Global TODO.md
+
+Just dump all Solution-wise TODOs here, so what to do next.
 
 ### TeArchitecture.Shared
 
-Most important project. Holds ideas that I want to test + some mock or simple implementation.
+Shared code between demo projects. Holds ideas that I want to test + some mock or simple implementation.
 
 Folders:
 - "Concepts": Interface definition for stuff that we want to test.
@@ -27,4 +35,4 @@ Unit test for "TeArchitect.Demo1" project.
 
 ### TeArchitecture.Domain
 
-Some domain specific entities and value-classes specific to TE (like Player, PlayerId, Morale, Condition...)
+Some domain specific entities and value-classes specific to TE (like Player, PlayerId, Morale, Condition...). Again shared between demos.
