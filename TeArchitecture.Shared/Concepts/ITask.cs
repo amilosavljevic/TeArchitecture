@@ -13,6 +13,8 @@ namespace TeArchitecture.Shared
 
         void Finish();
 
+        TaskState State { get; }
+
         IError Error { get; }
     }
 
@@ -23,7 +25,8 @@ namespace TeArchitecture.Shared
         void Fail(IError error);
         void Finish(T result);
 
-        T Value { get; }
+        TaskState State { get; }
+        T Result { get; }
         IError Error { get; }
     }
 
@@ -39,34 +42,52 @@ namespace TeArchitecture.Shared
             task.Fail(new Error(errorMessage));
         }
 
-        public static ITask OnSuccess(this ITask result, Action onSuccess)
+        public static ITask OnSuccess(this ITask task, Action onSuccess)
         {
-            throw new NotImplementedException();
+            if (onSuccess == null) return task;
+
+            task.Done += (t) =>
+            {
+                if (t.State == TaskState.Successful) onSuccess();
+            };
+
+            return task;
         }
 
-        public static ITask OnFail(this ITask result, Action<ITask> onFail)
+        public static ITask OnFail(this ITask task, Action<ITask> onFail)
         {
-            throw new NotImplementedException();
+            if (onFail == null) return task;
+
+            task.Done += (t) =>
+            {
+                if (t.State == TaskState.Failed) onFail(t);
+            };
+
+            return task;
+        }      
+
+        public static ITask<T> OnSuccess<T>(this ITask<T> task, Action<T> onSuccess)
+        {
+            if (onSuccess == null) return task;
+
+            task.Done += (t) =>
+            {
+                if (t.State == TaskState.Successful) onSuccess(t.Result);
+            };
+
+            return task;
         }
 
-        public static ITask OnFinish(this ITask result, Action<ITask> onFinish)
+        public static ITask<T> OnFail<T>(this ITask<T> task, Action<ITask<T>> onFail)
         {
-            throw new NotImplementedException();
-        }
+            if (onFail == null) return task;
 
-        public static ITask<T> OnSuccess<T>(this ITask<T> result, Action<T> onSuccess)
-        {
-            throw new NotImplementedException();
-        }
+            task.Done += (t) =>
+            {
+                if (t.State == TaskState.Failed) onFail(t);
+            };
 
-        public static ITask<T> OnFail<T>(this ITask<T> result, Action<ITask<T>> onFail)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static ITask OnFinish<T>(this ITask result, Action<ITask<T>> onFinish)
-        {
-            throw new NotImplementedException();
+            return task;
         }
     }
 }

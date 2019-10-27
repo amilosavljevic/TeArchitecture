@@ -9,29 +9,93 @@ namespace TeArchitecture.Shared
         Failed,
     }
 
-    public class Task : ITask
+   public class Task : ITask
    {
-        public event Action<ITask> Done;
+        private Action<ITask> doneHandlers;
 
-        private bool isDone = false;
+        public event Action<ITask> Done
+        {
+            add
+            {
+                if (State == TaskState.InProgress) doneHandlers += value;
+                else value?.Invoke(this);
+            }
+            remove
+            {
+                doneHandlers -= value;
+            }
+        }
 
-        public TaskState State => !isDone ? TaskState.Failed : (Error != null ? TaskState.Failed : TaskState.Successful);
+        public TaskState State { get; private set; }
 
         public IError Error { get; private set; }
 
         public void Fail(IError error)
         {
-            isDone = true;
+            State = TaskState.Failed;
             Error = error;
             ExecuteCallbacks();
         }       
 
         public void Finish()
         {
-            isDone = true;
+            State = TaskState.Successful;
             ExecuteCallbacks();
         }
 
-        private void ExecuteCallbacks() => Done?.Invoke(this);
+        private void ExecuteCallbacks() => doneHandlers?.Invoke(this);
+
+        public static Task FinishedTask()
+        {
+            var task = new Task();
+            task.Finish();
+            return task;
+        }
+    }
+
+    public class Task<TResult> : ITask<TResult>
+    {
+        private Action<ITask<TResult>> doneHandlers;
+
+        public event Action<ITask<TResult>> Done
+        {
+            add
+            {
+                if (State == TaskState.InProgress) doneHandlers += value;
+                else value?.Invoke(this);
+            }
+            remove
+            {
+                doneHandlers -= value;
+            }
+        }
+
+        public TaskState State { get; private set; }
+        public TResult Result { get; private set; }
+        public IError Error { get; private set; }
+
+
+        public void Fail(IError error)
+        {
+            State = TaskState.Failed;
+            Error = error;
+            ExecuteCallbacks();
+        }
+
+        public void Finish(TResult result)
+        {
+            State = TaskState.Successful;
+            Result = result;
+            ExecuteCallbacks();
+        }
+
+        private void ExecuteCallbacks() => doneHandlers?.Invoke(this);
+
+        public static Task<TResult> FinishedTask(TResult result)
+        {
+            var task = new Task<TResult>();
+            task.Finish(result);
+            return task;
+        }
     }
 }

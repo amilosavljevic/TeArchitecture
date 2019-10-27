@@ -51,7 +51,7 @@ namespace TeArchitecture.Demo1
             var player1IsOnPitch = squad.IsOnPitch(action.Player1);
             var player2IsOnPitch = squad.IsOnPitch(action.Player2);
 
-            if (!player1IsOnPitch && player2IsOnPitch)
+            if (!player1IsOnPitch && !player2IsOnPitch)
             {
                 return Fail(PlayersNotOnPitch);                
             }
@@ -117,6 +117,5 @@ namespace TeArchitecture.Demo1
     public class SubstitutePlayerResponse
     {
         public bool IsSuccess;
-        public PlayerId Player1;
     }
 }

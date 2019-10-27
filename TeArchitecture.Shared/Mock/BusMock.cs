@@ -10,7 +10,7 @@ namespace TeArchitecture.Shared.Mock
         public ITask Send<TMessage>(TMessage message, object sender = null)
         {
             SentMessages.Add(message);
-            return null;
+            return Task.FinishedTask();
         }
 
         public void Subscribe<TMessage>(Action<TMessage> handler)
@@ -18,17 +18,7 @@ namespace TeArchitecture.Shared.Mock
             throw new NotImplementedException();
         }
 
-        public void Subscribe<TMessage>(Func<IHandler<TMessage>> handlerFactory)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Unsubscribe<TMessage>(Action<TMessage> handler)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Unsubscribe<TMessage>(Func<IHandler<TMessage>> handlerFactory)
         {
             throw new NotImplementedException();
         }
