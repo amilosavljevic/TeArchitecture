@@ -4,6 +4,7 @@
 * Modify Task to hold additional data (like IError)
 * Try to create a View that you can use without Unity.
 * Try to import projects in Unity.
+* Work on UI fixes
 
 # Questions
 - Exception that is not thrown instead of IError for Task?
