@@ -20,11 +20,8 @@ namespace TeArchitecture.Shared
                 if (State == TaskState.InProgress) doneHandlers += value;
                 else value?.Invoke(this);
             }
-            remove
-            {
-                doneHandlers -= value;
-            }
-        }
+            remove => doneHandlers -= value;
+		}
 
         public TaskState State { get; private set; }
 
@@ -35,7 +32,7 @@ namespace TeArchitecture.Shared
             State = TaskState.Failed;
             Error = error;
             ExecuteCallbacks();
-        }       
+        }
 
         public void Finish()
         {

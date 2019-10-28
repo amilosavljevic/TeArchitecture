@@ -31,17 +31,17 @@ namespace TeArchitecture.Demo1
 
             if (player == null)
             {
-                return Fail("Player not part Of the Squad.");                
+                return Fail("Player not part Of the Squad.");
             }
 
             if (player.Age > 31)
             {
-                return Fail("Player too old for this shit.");                
+                return Fail("Player too old for this shit.");
             }
 
             if (squad.IsOnPitch(sellAction.PlayerId))
             {
-                return Fail("Cannot sell player on pitch.");                
+                return Fail("Cannot sell player on pitch.");
             }
 
             // this will simulate sending proto to server.
@@ -62,6 +62,7 @@ namespace TeArchitecture.Demo1
                         // Success -> update model and stuff...
                         squad.AllPlayers.RemoveAll(p=>p.Id == sellAction.PlayerId);
                         wallet.Money += r.SellPrice;
+						bus.Send(new SquadUpdatedEvent(squad));
                         Finish();
                     }
                 ).OnFail( _ => Fail("Server did not respond."));
@@ -72,7 +73,7 @@ namespace TeArchitecture.Demo1
     }
 
     #region Proto imitation
-   
+
     public class SellPlayerRequest
     {
         public long PlayerId;

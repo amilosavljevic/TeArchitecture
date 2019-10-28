@@ -45,7 +45,7 @@ namespace TeArchitecture.Demo1
 
             if (action.Player1 == action.Player2)
             {
-                return Fail(CannotSwapWithSamePlayer);                
+                return Fail(CannotSwapWithSamePlayer);
             }
 
             var player1IsOnPitch = squad.IsOnPitch(action.Player1);
@@ -53,7 +53,7 @@ namespace TeArchitecture.Demo1
 
             if (!player1IsOnPitch && !player2IsOnPitch)
             {
-                return Fail(PlayersNotOnPitch);                
+                return Fail(PlayersNotOnPitch);
             }
 
             var request = new SubstitutePlayerRequest()
@@ -69,7 +69,7 @@ namespace TeArchitecture.Demo1
                     {
                         Fail(FailToSubstituePlayersOnServer);
                         return;
-                    }                    
+                    }
 
                     if (player1IsOnPitch && player2IsOnPitch)
                     {
@@ -90,7 +90,7 @@ namespace TeArchitecture.Demo1
                         squad.PlayersOnPitch[indexOnPitch] = action.Player1;
                     }
 
-                    bus.Send(new SquadUpdatedEvent(squad));
+					bus.Send(new SquadUpdatedEvent(squad));
                     Finish();
                 })
                .OnFail(innerTask => Fail(FailToConnectToServer));
