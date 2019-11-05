@@ -5,6 +5,7 @@
 * Try to create a View that you can use without Unity.
 * Try to import projects in Unity.
 * Work on UI fixes
+* Kill HandlerCode IDs, Request to response type etc. Maybe resourect HandlerCode from somewhere?
 
 # Questions
 - Exception that is not thrown instead of IError for Task?
