@@ -196,6 +196,15 @@ namespace TeArchitecture.Demo1.Tests
             Assert.AreEqual(SubstitutePlayerHandler.FailToSubstituePlayersOnServer, task.Error);
         }
 
+        [Test]
+        public void DemoTest()
+        {
+            var p1 = new PlayerId(1);
+            var p2 = new PlayerId(1);
+            Assert.AreEqual(p1, p2);
+            Assert.IsTrue(p1 == p2);
+        }
+
         private Squad GenerateSquad()
         {
             return new Squad()

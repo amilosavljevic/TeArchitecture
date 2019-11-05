@@ -12,9 +12,6 @@ namespace TeArchitecture.Domain
         public bool Equals(PlayerId other) => id == other.id;
         public override int GetHashCode() => id.GetHashCode();
 
-        public static bool operator == (PlayerId p1, PlayerId p2) => p1.Equals(p2);
-        public static bool operator != (PlayerId p1, PlayerId p2) => !p1.Equals(p2);
-
         public static implicit operator long(PlayerId pId) => pId.id;
     }
 
