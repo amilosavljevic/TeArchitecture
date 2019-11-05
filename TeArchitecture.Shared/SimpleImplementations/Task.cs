@@ -71,7 +71,6 @@ namespace TeArchitecture.Shared
         public TResult Result { get; private set; }
         public IError Error { get; private set; }
 
-
         public void Fail(IError error)
         {
             State = TaskState.Failed;

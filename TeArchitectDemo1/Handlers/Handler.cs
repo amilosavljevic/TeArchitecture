@@ -3,14 +3,9 @@
     /// <summary>
     /// Handlers can handle message of provided type.
     /// </summary>
-    public interface IHandler<TMessage>
+    public abstract class Handler<TMessage>
     {
-        ITask Process(TMessage message);
-    }
-
-    public abstract class Handler<TMessage> : IHandler<TMessage>
-    {
-        private readonly ITask task = new Task();
+        private readonly Task task = new Task();
         public abstract ITask Process(TMessage message);
 
         protected ITask Fail(IError error)
@@ -21,7 +16,7 @@
 
         protected ITask Fail(string errorMessage)
         {
-            task.Fail(errorMessage);
+            task.Fail(new Error(errorMessage));
             return task;
         }
 

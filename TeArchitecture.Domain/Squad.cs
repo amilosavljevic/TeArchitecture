@@ -7,8 +7,8 @@ namespace TeArchitecture.Domain
     {
         // Should not be string.
         string Formation { get; }
-        IReadOnlyList<Player> PlayersOnPitch { get; }
-        IReadOnlyList<Player> AllPlayers { get; }
+        IReadOnlyList<IPlayer> PlayersOnPitch { get; }
+        IReadOnlyList<IPlayer> AllPlayers { get; }
 
         // TODO: Nullable reference types would be great here!
         Player GetPlayer(PlayerId id);
@@ -24,7 +24,7 @@ namespace TeArchitecture.Domain
         
         private readonly List<Player> cachedPlayersOnPitch = new List<Player>();
 
-        IReadOnlyList<Player> ISquad.PlayersOnPitch
+        IReadOnlyList<IPlayer> ISquad.PlayersOnPitch
         {
             get
             {
@@ -34,7 +34,7 @@ namespace TeArchitecture.Domain
             }
         }
 
-        IReadOnlyList<Player> ISquad.AllPlayers => AllPlayers;
+        IReadOnlyList<IPlayer> ISquad.AllPlayers => AllPlayers;
 
         public Player GetPlayer(PlayerId id) => AllPlayers.Find(p => p.Id == id);
 

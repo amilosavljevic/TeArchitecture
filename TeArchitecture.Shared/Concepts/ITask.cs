@@ -7,14 +7,9 @@ namespace TeArchitecture.Shared
     /// </summary>
     public interface ITask
     {
-        event Action<ITask> Done;
-        
-        void Fail(IError error);
-
-        void Finish();
+        event Action<ITask> Done;        
 
         TaskState State { get; }
-
         IError Error { get; }
     }
 
@@ -23,10 +18,7 @@ namespace TeArchitecture.Shared
     /// </summary>
     public interface ITask<T>
     {
-        event Action<ITask<T>> Done;        
-
-        void Fail(IError error);
-        void Finish(T result);
+        event Action<ITask<T>> Done;
 
         TaskState State { get; }
         T Result { get; }
@@ -35,16 +27,6 @@ namespace TeArchitecture.Shared
 
     public static partial class ITaskExtensions
     {
-        public static void Fail(this ITask task, string errorMessage)
-        {
-            task.Fail(new Error(errorMessage));
-        }
-
-        public static void Fail<T>(this ITask<T> task, string errorMessage)
-        {
-            task.Fail(new Error(errorMessage));
-        }
-
         public static ITask OnSuccess(this ITask task, Action onSuccess)
         {
             if (onSuccess == null) return task;

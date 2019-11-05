@@ -33,7 +33,7 @@ namespace TeArchitecture.Demo1
 
         #region Handler registration        
         
-        protected void On<TMessage>(Func<IHandler<TMessage>> handlerFactory)
+        protected void On<TMessage>(Func<Handler<TMessage>> handlerFactory)
         {
             // TODO: un-subscribe.
             GlobalBus.Instance.Subscribe<TMessage>(
