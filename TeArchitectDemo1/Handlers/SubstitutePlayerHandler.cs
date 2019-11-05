@@ -62,7 +62,7 @@ namespace TeArchitecture.Demo1
                 Player2 = action.Player2,
             };
 
-            communicationChannel.Send<SubstitutePlayerRequest, SubstitutePlayerResponse> (request, this)
+            communicationChannel.Send<SubstitutePlayerRequest, SubstitutePlayerResponse> (request)
                .OnSuccess ( (SubstitutePlayerResponse res) =>
                 {
                     if (!res.IsSuccess)

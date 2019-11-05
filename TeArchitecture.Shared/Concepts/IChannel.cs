@@ -5,6 +5,6 @@
     /// </summary>
     public interface IChannel
     {
-        ITask<TResponse> Send<TMessage, TResponse>(TMessage message, object sender = null);
+        ITask<TResponse> Send<TMessage, TResponse>(TMessage message);
     }
 }

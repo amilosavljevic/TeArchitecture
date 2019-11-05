@@ -12,7 +12,7 @@ namespace TeArchitecture.Shared.Mock
             generators[typeof(TMessage)] = responseGenerator;
         }
 
-        public ITask<TResponse> Send<TMessage, TResponse>(TMessage message, object sender = null)
+        public ITask<TResponse> Send<TMessage, TResponse>(TMessage message)
         {            
             var responseGenerator = (Func<TMessage, TResponse>)generators[typeof(TMessage)];
             return Task<TResponse>.FinishedTask(responseGenerator(message));
