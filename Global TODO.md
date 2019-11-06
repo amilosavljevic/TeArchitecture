@@ -1,10 +1,11 @@
 # TODOs
 
-* Create Demo2 that is using C# Task instead of ITask.
-* Modify Task to hold additional data (like IError)
+### Next step: UI
+* MVVM base
 * Try to create a View that you can use without Unity.
 * Try to import projects in Unity.
-* Work on UI fixes
+
+### Misc
 * Kill HandlerCode IDs, Request to response type etc. Maybe resourect HandlerCode from somewhere?
 
 # Questions

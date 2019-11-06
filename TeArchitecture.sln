@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeArchitecture.Shared", "Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeArchitecture.Domain", "TeArchitecture.Domain\TeArchitecture.Domain.csproj", "{960F4067-11F0-4F4E-BEEE-78CB8668C7BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeArchitecture.Demo1.Tests", "TeArchitecture.Demo1.Tests\TeArchitecture.Demo1.Tests.csproj", "{46C2F973-0F68-4923-AB5E-73593A6BAB08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeArchitecture.Demo1.Tests", "TeArchitecture.Demo1.Tests\TeArchitecture.Demo1.Tests.csproj", "{46C2F973-0F68-4923-AB5E-73593A6BAB08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeArchitecture.MVVM", "TeArchitecture.MVVM\TeArchitecture.MVVM.csproj", "{B173AE35-2FB1-44E2-895A-D0F788EBEC4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{46C2F973-0F68-4923-AB5E-73593A6BAB08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46C2F973-0F68-4923-AB5E-73593A6BAB08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46C2F973-0F68-4923-AB5E-73593A6BAB08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B173AE35-2FB1-44E2-895A-D0F788EBEC4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B173AE35-2FB1-44E2-895A-D0F788EBEC4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B173AE35-2FB1-44E2-895A-D0F788EBEC4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B173AE35-2FB1-44E2-895A-D0F788EBEC4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
